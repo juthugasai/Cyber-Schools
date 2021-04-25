@@ -8,7 +8,7 @@ export default class Header extends React.Component {
       <View style={styles.header}>
         <StatusBar backgroundColor="blue" barStyle="light-content" />
         <Text style={styles.title}>
-          #{this.props.title}
+          {this.props.title}
         </Text>
       </View>
     );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View,TouchableOpacity,Image } from 'react-native';
+import { StyleSheet, Text, View,TextInput,TouchableOpacity,Image } from 'react-native';
 import firebase from 'firebase'
 import db from '../config'
 
@@ -9,14 +9,14 @@ export default class SHomeScreen extends React.Component {
     super()
     this.state={
       allSubjects:[],
-      userId: firebase.auth().currentUser.email
-
+      //userId: firebase.auth().currentUser.email
+      studentId: ""
     }
     this.subjectRef=null;
   }
 
   getSubjects=()=>{
-    this.subjectRef = db.collection("students").where('email_id' ,'==', this.state.userId)
+    this.subjectRef = db.collection("students").where('student_id' ,'==', this.state.studentId).collection("subjects")
     .onSnapshot((snapshot)=>{
       var allSubjects=[]
       snapshot.docs.map((doc)=>{
@@ -45,6 +45,16 @@ export default class SHomeScreen extends React.Component {
                         source={require("../assets/cyber.png")}
                         style={{width:250, height: 200,marginLeft:405,alignItems:'center'}}/>
                 <Text style={{textAlign: 'center', fontSize: 30}}>Cyber-Schools</Text>
+
+                <TextInput
+                placeholder="Enter your stdent ID"
+                onChangeText={(text)=>{
+                  this.setState({
+                    studentId:text
+                  })
+                }
+
+                }/>
 
                 {
                   this.state.allSubjects.map((item)=>{
